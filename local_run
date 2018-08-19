@@ -1,0 +1,16 @@
+export IP_USER=admin
+export IP_PASSWD=Password1337
+export IP_URL="http://31.208.25.104:8364/ISAPI/Event/notification/alertstream"
+
+export RABBIT_USER=guest
+export RABBIT_PASSWD=guest
+export RABBIT_URL=localhost
+export RABBIT_PORT=5672
+
+
+
+
+
+
+
+docker run -d --name sia_worker -e IP_USER=admin -e IP_PASSWD=Password1337 -e IP_URL="http://31.208.25.104:8364/ISAPI/Event/notification/alertstream" -e RABBIT_USER=guest -e RABBIT_PASSWD=guest -e RABBIT_URL=localhost -e RABBIT_PORT=5672 siaworker:latest 

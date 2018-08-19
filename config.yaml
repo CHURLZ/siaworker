@@ -1,0 +1,12 @@
+# config for camera worker
+
+account: 'xxxx'
+zone: '1'
+events:
+  - eventType: 'type'
+    eventState: 'active'
+    siaCode: -1
+  
+  - eventType: 'type'
+    eventState: 'active'
+    siaCode: -1

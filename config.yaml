@@ -1,12 +1,16 @@
 # config for camera worker
 
-account: 'xxxx'
+account: '06e5a032-2d26-43ef-b10d-56906a98fb59'
 zone: '1'
 events:
-  - eventType: 'type'
+  - eventType: 'videoloss'
     eventState: 'active'
-    siaCode: -1
+    siaCode: 'AP'
   
-  - eventType: 'type'
-    eventState: 'active'
-    siaCode: -1
+  - eventType: 'videoloss'
+    eventState: 'inactive'
+    siaCode: 'HA'
+
+  - eventType: 'videoloss'
+    eventState: 'inactive'
+    siaCode: 'XX'

@@ -2,11 +2,19 @@ package main
 
 import (
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"io"
+
+	"github.com/satori/go.uuid"
 )
 
 type Event struct {
+	EventId       string
+	Zone          string
+	AccountNumber string
+	SiaCode       string
+
 	IpAddress        string `xml:"ipAddress"`
 	PortNo           string `xml:"portNo"`
 	MacAddress       string `xml:"macAddress"`
@@ -18,7 +26,33 @@ type Event struct {
 	EventDescription string `xml:"eventDescription"`
 }
 
-func (evt *Event) MarshalBuffer() ([]byte, error) {
+func (evt *Event) Prime(c Config) {
+	evt.AccountNumber = c.Account
+	evt.Zone = c.Zone
+	sia, _ := evt.GetSia(c)
+	evt.SiaCode = sia
+	evt.EventId = uuid.Must(uuid.NewV4()).String()
+}
+
+func (evt *Event) GetSia(c Config) (string, error) {
+	for _, e := range c.Events {
+		if evt.EventType == e.EventType && evt.EventState == e.EventState {
+			return e.SiaCode, nil
+		}
+	}
+	return "", errors.New(fmt.Sprintf("Found no SiaCode for %s : %s", evt.EventType, evt.EventState))
+}
+
+func (evt *Event) QualifiesForPublish(c Config) bool {
+	for _, e := range c.Events {
+		if evt.EventType == e.EventType && evt.EventState == e.EventState {
+			return true
+		}
+	}
+	return false
+}
+
+func (evt *Event) Marshal() ([]byte, error) {
 	return xml.Marshal(evt)
 }
 
